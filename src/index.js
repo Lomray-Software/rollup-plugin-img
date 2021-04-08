@@ -1,5 +1,5 @@
 import { statSync, readFileSync, createReadStream, createWriteStream, existsSync, mkdirSync } from 'fs';
-import { extname, basename  } from 'path';
+import { extname, basename, relative  } from 'path';
 import { createFilter } from 'rollup-pluginutils';
 import hasha from 'hasha';
 
@@ -31,7 +31,7 @@ function img(opt = {}) {
 				return `export default "data:${mimeMap[ext]};base64,${readFileSync(id, 'base64')}"`;
       } else { //copy file to distPath
 		let name = basename(id);
-		var outputRelative = path.relative('./', opt.output || '') || '';
+		var outputRelative = relative('./', opt.output || '') || '';
 		const output = opt.outputPathHandler ? opt.outputPathHandler(id, name, outputRelative) : outputRelative;
 
         if (!existsSync(output)) {
@@ -53,7 +53,7 @@ function img(opt = {}) {
 		let baseIndex = outputFile.indexOf('/');
 
 		baseIndex = baseIndex !== -1 ? baseIndex + 1 : 0;
-        createReadStream(id).pipe(createWriteStream(output));
+        createReadStream(id).pipe(createWriteStream(outputFile));
 
 		const fileDest = outputFile.slice(baseIndex);
 		const exportString = (opt._slash ? './' : '') + (opt.pathHandler ? opt.pathHandler(fileDest, name, id) : fileDest);
