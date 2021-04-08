@@ -2,6 +2,8 @@
 
 Import image files with rollup. Let you import images just like what you do with webpack in your React code!
 
+THIS FORK ADD NEXT OPTIONS: addRequire, addExtraRequire, pathHandler, outputPathHandler, extraExtensions
+
 
 ## Installation
 
